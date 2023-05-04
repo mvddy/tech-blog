@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Create user schema and model
-const userSchema = new mongoose.Schema({
+const userSchema = new express.Schema({
   username: {
     type: String,
     required: true,
@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model('User', userSchema);
+const User = express.model('User', userSchema);
 
 // Create blog post schema and model
-const postSchema = new mongoose.Schema({
+const postSchema = new express.Schema({
   title: {
     type: String,
     required: true,
@@ -33,12 +33,12 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: express.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
   comments: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: express.Schema.Types.ObjectId,
     ref: 'Comment',
   }],
   createdAt: {
@@ -47,21 +47,21 @@ const postSchema = new mongoose.Schema({
   },
 });
 
-const Post = mongoose.model('Post', postSchema);
+const Post = express.model('Post', postSchema);
 
 // Create comment schema and model
-const commentSchema = new mongoose.Schema({
+const commentSchema = new express.Schema({
   content: {
     type: String,
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: express.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
   post: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: express.Schema.Types.ObjectId,
     ref: 'Post',
     required: true,
   },
@@ -71,9 +71,9 @@ const commentSchema = new mongoose.Schema({
   },
 });
 
-const Comment = mongoose.model('Comment', commentSchema);
+const Comment = express.model('Comment', commentSchema);
 
-// Middleware to parse JSON request bodies
+// JSON Middleware
 app.use(express.json());
 
 // Middleware to handle errors
@@ -82,7 +82,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something went wrong!');
 });
 
-// User registration endpoint
+// User registration
 app.post('/register', async (req, res, next) => {
   try {
     const { username, password } = req.body;
