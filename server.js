@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 // Create user schema and model
 const userSchema = new express.Schema({
@@ -95,8 +95,8 @@ app.post('/register', async (req, res, next) => {
     }
 
     // Hash password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const userKey = 10;
+    const hashedPassword = await bcrypt.hash(password, userKey);
 
     // new user
     const newUser = new User({

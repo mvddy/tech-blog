@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS techblog_db;
+CREATE DATABASE techblog_db;
+
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(255) UNIQUE NOT NULL,
