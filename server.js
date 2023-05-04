@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
@@ -7,12 +6,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
-const mongoURI = process.env.MONGO_URI;
-
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log('Connected to MongoDB'));
 
 // Create user schema and model
 const userSchema = new mongoose.Schema({
@@ -105,7 +98,7 @@ app.post('/register', async (req, res, next) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Create new user
+    // new user
     const newUser = new User({
       username,
       password: hashedPassword,
@@ -128,4 +121,7 @@ app.post('/login', async (req, res, next) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(401).send('Invalid')}})
+      return res.status(401).send('Invalid');
+    }}
+    catch{error}}
+);
